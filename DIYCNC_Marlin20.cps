@@ -425,10 +425,15 @@ function onSection() {
     writeFirstSection();
   }
   writeActivityComment(" *** SECTION begin ***");
-writeComment("WCS Offset=" + currentSection.workOffset)
+writeComment("WCS Offset=" + currentSection.workOffset + " Tool=" + tool.number)
   // Tool change
   if (properties.toolChangeEnabled && !isFirstSection() && tool.number != getPreviousSection().getTool().number) {
     if (properties.gcodeToolFile == "") {
+if (fusionprobing)
+{
+  fusionprobing=false;
+  FirmwareMarlin20.prototype.askUser("Remove probe", "Probe", false);
+}
       // Builtin tool change gcode
       writeActivityComment(" --- CHANGE TOOL begin ---");
       currentFirmware.toolChange();
@@ -1175,6 +1180,7 @@ var sectionComment="";
 var g68RotationMode = 0;
 var cycleSubprogramIsActive = false;
 var incrementalMode = false;
+var fusionprobing = false;
 
 function onParameter(name, value) {
   if (name == "probe-output-work-offset") {
@@ -1206,6 +1212,12 @@ function onCyclePoint(x, y, z) {
       error(localize("Updating WCS / work offset using probing is only supported by the CNC in the WCS frame."));
       return;
     }
+    if (! fusionprobing)
+    {
+      fusionprobing = true;
+      FirmwareMarlin20.prototype.askUser("Attach probe", "Probe", false);
+    }
+
     protectedProbeMove(cycle, x, y, z);
 
     var workOffset = probeOutputWorkOffset ? probeOutputWorkOffset : currentWorkOffset;
@@ -1230,6 +1242,7 @@ function onCyclePoint(x, y, z) {
 
     switch (cycleType) {
     case "probing-xy-outer-corner":
+
       var cornerX = x+ (approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)*2);
       var cornerY = y + approach(cycle.approach2) * (cycle.probeClearance + tool.diameter / 2)*2;
       var cornerI = x+ (approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2+ cycle.probeOvertravel));
@@ -1249,6 +1262,11 @@ function onCyclePoint(x, y, z) {
       writeBlock(gFormat.format(38.2), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
       writeBlock(gFormat.format(38.2), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
       break;
+      case "probing-z":
+        writeComment(" Probing Z:" + JSON.stringify(cycle));
+        writeBlock(gFormat.format(38.2), zOutput.format(z - cycle.depth - cycle.probeOvertravel), fFormat.format(cycle.feedrate));
+        writeBlock(gFormat.format(92), zOutput.format(z - cycle.depth ));
+        break;
       default:
         expandCyclePoint(x, y, z);      
     }   
