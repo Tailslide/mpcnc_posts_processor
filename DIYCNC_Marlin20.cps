@@ -1140,13 +1140,13 @@ function protectedProbeMove(_cycle, x, y, z) {
   var _z = zOutput.format(z);
   writeComment("*** protectedProbeMove: " + _cycle + ":" + _x + "," + _y + "," + _z) ;
   if (_z && z >= getCurrentPosition().z) {
-    writeBlock( gFormat.format(38.3), _z, getFeed(cycle.feedrate)); // protected positioning move
+    writeBlock( gFormat.format(38.3), _z, getFeed(properties.jobTravelSpeedZ)); // protected positioning move
   }
   if (_x || _y) {
     writeBlock( gFormat.format(38.3), _x, _y, getFeed(highFeedrate)); // protected positioning move
   }
   if (_z && z < getCurrentPosition().z) {
-    writeBlock( gFormat.format(38.3), _z, getFeed(cycle.feedrate)); // protected positioning move
+    writeBlock( gFormat.format(38.3), _z, getFeed(properties.jobTravelSpeedZ)); // protected positioning move
   }
 }
 var useInverseTimeFeed = false; // use 1/T feeds
