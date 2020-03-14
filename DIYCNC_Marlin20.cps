@@ -1140,13 +1140,13 @@ function protectedProbeMove(_cycle, x, y, z) {
   var _z = zOutput.format(z);
   writeComment("*** protectedProbeMove: " + _cycle + ":" + _x + "," + _y + "," + _z) ;
   if (_z && z >= getCurrentPosition().z) {
-    writeBlock( gFormat.format(38.2), _z, getFeed(cycle.feedrate)); // protected positioning move
+    writeBlock( gFormat.format(38.3), _z, getFeed(cycle.feedrate)); // protected positioning move
   }
   if (_x || _y) {
-    writeBlock( gFormat.format(38.2), _x, _y, getFeed(highFeedrate)); // protected positioning move
+    writeBlock( gFormat.format(38.3), _x, _y, getFeed(highFeedrate)); // protected positioning move
   }
   if (_z && z < getCurrentPosition().z) {
-    writeBlock( gFormat.format(38.2), _z, getFeed(cycle.feedrate)); // protected positioning move
+    writeBlock( gFormat.format(38.3), _z, getFeed(cycle.feedrate)); // protected positioning move
   }
 }
 var useInverseTimeFeed = false; // use 1/T feeds
@@ -1248,19 +1248,19 @@ function onCyclePoint(x, y, z) {
       var cornerI = x+ (approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2+ cycle.probeOvertravel));
       var cornerJ = y + approach(cycle.approach2) * (cycle.probeClearance + tool.diameter / 2 + cycle.probeOvertravel);
 //      protectedProbeMove(cycle, x, y, z - cycle.depth);
-      writeBlock(gFormat.format(38.2), zOutput.format(z - cycle.depth), fFormat.format(properties.jobTravelSpeedZ));
-      writeBlock(gFormat.format(38.2), xOutput.format(cornerX), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(38.3), zOutput.format(z - cycle.depth), fFormat.format(properties.jobTravelSpeedZ));
+      writeBlock(gFormat.format(38.3), xOutput.format(cornerX), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.2), yOutput.format(cornerJ), fFormat.format(cycle.feedrate));
       writeBlock(gFormat.format(92), yOutput.format(y  +  approach(cycle.approach2) * cycle.probeClearance));
-      writeBlock(gFormat.format(38.2), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
-      writeBlock(gFormat.format(38.2), xOutput.format(x), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
-      writeBlock(gFormat.format(38.2), yOutput.format(cornerY), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(38.3), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(38.3), xOutput.format(x), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(38.3), yOutput.format(cornerY), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.2), xOutput.format(cornerI), fFormat.format(cycle.feedrate));
       writeBlock(gFormat.format(92), xOutput.format(x  +  approach(cycle.approach1) * cycle.probeClearance));
-      writeBlock(gFormat.format(38.2), xOutput.format(x), fFormat.format(properties.jobTravelSpeedXY));
-      writeBlock(gFormat.format(38.2), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
-      writeBlock(gFormat.format(38.2), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
-      writeBlock(gFormat.format(38.2), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
+      writeBlock(gFormat.format(38.3), xOutput.format(x), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(38.3), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(38.3), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
+      writeBlock(gFormat.format(38.3), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
       break;
       case "probing-z":
         writeComment(" Probing Z:" + JSON.stringify(cycle));
