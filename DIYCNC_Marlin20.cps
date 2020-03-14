@@ -1252,12 +1252,12 @@ function onCyclePoint(x, y, z) {
       writeBlock(gFormat.format(38.3), xOutput.format(cornerX), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.2), yOutput.format(cornerJ), fFormat.format(cycle.feedrate));
       writeBlock(gFormat.format(92), yOutput.format(y  +  approach(cycle.approach2) * cycle.probeClearance));
-      writeBlock(gFormat.format(38.3), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(0), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.3), xOutput.format(x), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.3), yOutput.format(cornerY), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.2), xOutput.format(cornerI), fFormat.format(cycle.feedrate));
       writeBlock(gFormat.format(92), xOutput.format(x  +  approach(cycle.approach1) * cycle.probeClearance));
-      writeBlock(gFormat.format(38.3), xOutput.format(x), fFormat.format(properties.jobTravelSpeedXY));
+      writeBlock(gFormat.format(0), xOutput.format(x), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.3), yOutput.format(y), fFormat.format(properties.jobTravelSpeedXY));
       writeBlock(gFormat.format(38.3), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
       writeBlock(gFormat.format(38.3), zOutput.format(cycle.clearance), fFormat.format(properties.jobTravelSpeedZ));
